@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - default
+
+  ipfs:
+    image: ipfs/go-ipfs
+    ports:
+      - "4001:4001"
+      - "5001:5001"
+      - "8880:8080"
+
+networks:
+  default:
