@@ -1,2 +1,48 @@
 server:
   port : 8081
+
+#Eventeum Settings
+ethereum:
+  nodes:
+    - name: default
+      url: wss://rinkeby.infura.io/ws
+      syncingThreshold: 100
+  healthcheck:
+    pollInterval: 2000
+  blockStrategy: PUBSUB
+
+eventStore:
+  type: DB
+database:
+  type: MONGO
+
+broadcaster:
+  type: NONE
+  cache:
+    expirationMillis: 6000000
+  event:
+    confirmation:
+      numBlocksToWait: 0
+      numBlocksToWaitForMissingTx: 100
+      numBlocksToWaitBeforeInvalidating: 0
+  multiInstance: false
+
+eventFilters:
+  - id: BadgeMinted
+    contractAddress: "0x3b17e017184be44d858943127c24354ea332358e"
+    eventSpecification:
+      eventName: BadgeMinted
+      nonIndexedParameterDefinitions:
+        - position: 0
+          type: UINT256
+        - position: 3
+          type: STRING
+      indexedParameterDefinitions:
+        - position: 1
+          type: ADDRESS
+        - position: 2
+          type: UINT256
+    correlationId:
+      type: NON_INDEXED_PARAMETER
+      index: 0
+#End of Eventeum Settings

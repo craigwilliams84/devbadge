@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.web3j.crypto.Hash;
 import org.web3j.utils.Numeric;
-import uk.co.craigcodes.devbadge.DevbadgeException;
+import uk.co.craigcodes.devbadge.exception.DevbadgeException;
 import uk.co.craigcodes.devbadge.factory.NftDetailsFactory;
 import uk.co.craigcodes.devbadge.model.Signature;
 import uk.co.craigcodes.devbadge.model.badge.Badge;
@@ -62,27 +62,28 @@ public class Erc721BadgeMintingService implements BadgeMintingService {
         awardedBadges.forEach(badge -> {
             final NftDetails nftDetails = nftDetailsFactory.create();
 
+            nftDetails.setOwnerAddress("0x8ef742b9BD0413C3a0eD98E8a85ef84dFcBcBF11");
             nftDetails.setRedeemed(false);
-            //nftDetails.setRedemptionSignature();
 
             badge.setNftDetails(nftDetails);
 
             storeMetadata(badge);
+            nftDetails.setRedemptionSignature(signNftRedemptionProof(badge));
         });
     }
 
     private void storeMetadata(Badge badge) {
         final Erc721Metadata metadata = new Erc721Metadata();
-        metadata.setName(badge.getName());
+        metadata.setName(badge.getName() + " - " + badge.getAssociatedRepository());
         metadata.setDescription(badge.getDescription());
-        metadata.setImageUrl("https://image.freepik.com/free-vector/golden-trophy_23-2147508492.jpg");
+        metadata.setImageUrl(badge.getImageUrl());
         metadata.setExternalUrl("https://www.kauri.io");
 
         final ObjectMapper mapper = new ObjectMapper();
 
         try {
             final String hash = ipfsService.saveContent(mapper.writeValueAsBytes(metadata));
-            badge.getNftDetails().setMetadataUrl(String.format("https://ipfs.infura.io/5001/ipfs/%s", hash));
+            badge.getNftDetails().setMetadataUrl(String.format("https://ipfs.infura.io/ipfs/%s", hash));
 
         } catch (JsonProcessingException e) {
             throw new DevbadgeException("Unable to save metadata", e);
@@ -92,7 +93,7 @@ public class Erc721BadgeMintingService implements BadgeMintingService {
     private Signature signNftRedemptionProof(Badge badge) {
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            outputStream.write(Numeric.hexStringToByteArray(badge.getOwnerId()));
+            outputStream.write(Numeric.hexStringToByteArray(badge.getNftDetails().getOwnerAddress()));
             outputStream.write(Numeric.hexStringToByteArray(
                     Numeric.toHexStringWithPrefixZeroPadded(badge.getTypeId(), 64)));
             outputStream.write(badge.getNftDetails().getMetadataUrl().getBytes());
@@ -101,6 +102,8 @@ public class Erc721BadgeMintingService implements BadgeMintingService {
         }
 
         final byte[] message = Hash.sha3(outputStream.toByteArray());
+
+        System.out.println("MESSAGE: " + Numeric.toHexString(message));
 
         return signatureService.sign(message);
     }

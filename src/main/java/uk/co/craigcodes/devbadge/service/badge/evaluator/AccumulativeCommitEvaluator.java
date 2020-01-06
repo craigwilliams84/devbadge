@@ -2,7 +2,6 @@ package uk.co.craigcodes.devbadge.service.badge.evaluator;
 
 import lombok.AllArgsConstructor;
 import org.web3j.crypto.Hash;
-import uk.co.craigcodes.devbadge.factory.NftDetailsFactory;
 import uk.co.craigcodes.devbadge.model.badge.Badge;
 import uk.co.craigcodes.devbadge.model.badge.DefaultAccumulativeCommitBadge;
 import uk.co.craigcodes.devbadge.model.github.ContributionDetails;
@@ -28,6 +27,7 @@ public abstract class AccumulativeCommitEvaluator implements BadgeEvaluator {
             badge.setName(generateName(user, contributionDetails));
             badge.setDescription(generateDescription(user, contributionDetails));
             badge.setAssociatedRepository(contributionDetails.getRepoName());
+            badge.setImageUrl(getImageUrl());
 
             //TODO
             badge.setTypeId(BigInteger.TEN);
@@ -41,6 +41,8 @@ public abstract class AccumulativeCommitEvaluator implements BadgeEvaluator {
     abstract String generateDescription(String user, ContributionDetails contributionDetails);
 
     abstract String generateName(String user, ContributionDetails contributionDetails);
+
+    abstract String getImageUrl();
 
     private String generateId() {
         return Hash.sha3String(UUID.randomUUID().toString());

@@ -8,9 +8,11 @@ public class MaestroLevelEvaluator extends AccumulativeCommitEvaluator {
 
     private static final int COMMIT_THRESHOLD = 50;
 
-    private static final String NAME_FORMAT = "Maestro - %s";
+    private static final String NAME = "Maestro";
 
     private static final String DESCRIPTION_FORMAT = "Woah, 50 contributions to the %s respository...you know what you're doing!!";
+
+    private static final String IMAGE_URL = "https://image.freepik.com/free-vector/golden-trophy_23-2147508492.jpg";
 
     public MaestroLevelEvaluator() {
         super(COMMIT_THRESHOLD);
@@ -23,6 +25,11 @@ public class MaestroLevelEvaluator extends AccumulativeCommitEvaluator {
 
     @Override
     String generateName(String user, ContributionDetails contributionDetails) {
-        return String.format(NAME_FORMAT, contributionDetails.getRepoName());
+        return NAME;
+    }
+
+    @Override
+    String getImageUrl() {
+        return IMAGE_URL;
     }
 }

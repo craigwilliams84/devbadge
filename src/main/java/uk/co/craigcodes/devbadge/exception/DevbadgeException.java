@@ -1,4 +1,4 @@
-package uk.co.craigcodes.devbadge;
+package uk.co.craigcodes.devbadge.exception;
 
 public class DevbadgeException extends RuntimeException {
 

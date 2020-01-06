@@ -3,12 +3,16 @@ package uk.co.craigcodes.devbadge.model.badge;
 import lombok.Data;
 import uk.co.craigcodes.devbadge.model.badge.nft.NftDetails;
 
+import java.math.BigInteger;
+
 @Data
 public class DefaultAccumulativeCommitBadge implements AccumulativeCommitBadge {
 
     private String id;
 
     private String ownerId;
+
+    private BigInteger typeId;
 
     private String name;
 
@@ -19,6 +23,8 @@ public class DefaultAccumulativeCommitBadge implements AccumulativeCommitBadge {
     private long timestamp;
 
     private NftDetails nftDetails;
+
+    private String imageUrl;
 
     private int commitThreshold;
 

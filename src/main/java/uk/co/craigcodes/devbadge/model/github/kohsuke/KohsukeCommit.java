@@ -1,7 +1,7 @@
 package uk.co.craigcodes.devbadge.model.github.kohsuke;
 
 import org.kohsuke.github.GHCommit;
-import uk.co.craigcodes.devbadge.DevbadgeException;
+import uk.co.craigcodes.devbadge.exception.DevbadgeException;
 import uk.co.craigcodes.devbadge.model.github.GithubCommit;
 
 import java.io.IOException;

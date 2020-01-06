@@ -7,7 +7,7 @@ import io.ipfs.multihash.Multihash;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.co.craigcodes.devbadge.DevbadgeException;
+import uk.co.craigcodes.devbadge.exception.DevbadgeException;
 
 import java.io.IOException;
 import java.util.concurrent.*;

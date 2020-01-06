@@ -9,7 +9,7 @@ public class NftDetailsFactory implements DevbadgeFactory<NftDetails> {
     @Override
     public NftDetails create() {
         final NftDetails details = new NftDetails();
-        details.setContractAddress("0x1234");
+        details.setContractAddress("0xb363ea38d3d102cd08a75572ee5a74656e482376");
 
         return details;
     }

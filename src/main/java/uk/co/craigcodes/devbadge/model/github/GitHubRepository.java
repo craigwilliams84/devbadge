@@ -1,5 +1,7 @@
 package uk.co.craigcodes.devbadge.model.github;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public interface GitHubRepository {
@@ -8,5 +10,6 @@ public interface GitHubRepository {
 
     String getFullName();
 
+    @JsonIgnore
     List<GithubCommit> getCommitsByAuthor(String author);
 }

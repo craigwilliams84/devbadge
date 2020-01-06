@@ -20,6 +20,8 @@ public interface Badge {
 
     long getTimestamp();
 
+    String getImageUrl();
+
     NftDetails getNftDetails();
 
     void setId(String id);
@@ -37,6 +39,8 @@ public interface Badge {
     void setTimestamp(long timestamp);
 
     void setNftDetails(NftDetails nftDetails);
+
+    void setImageUrl(String url);
 
     boolean isEquivalent(Badge otherBadge);
 }
